@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Health-Sync AI — Gamified Wellness Academy</title>
+  <meta name="description" content="An AI-driven gamified wellness platform for SDG 3: Good Health and Well-being." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       AUTH OVERLAY — Login / Signup screens
+  ============================================================ -->
+  <div id="auth-overlay" class="auth-overlay">
+    <div class="auth-bg-particles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- LOGIN PANEL -->
+    <div class="auth-card glass" id="auth-login-panel">
+      <div class="auth-logo">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" stroke="var(--accent-primary)" stroke-width="2"/>
+          <path d="M12 20 L17 25 L28 14" stroke="var(--accent-secondary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="20" cy="20" r="6" fill="var(--accent-primary)" opacity="0.15"/>
+        </svg>
+        <h1 class="auth-brand">Health<span>Sync</span> AI</h1>
+      </div>
+      <p class="auth-tagline">Your Gamified Wellness Academy</p>
+
+      <div class="auth-form-group">
+        <label for="login-username">Username</label>
+        <input type="text" id="login-username" placeholder="Enter your username" autocomplete="username" />
+      </div>
+      <div class="auth-form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password" />
+      </div>
+
+      <p class="auth-error" id="login-error" role="alert" aria-live="polite"></p>
+
+      <button class="btn-primary full-width" id="btn-login">Sign In</button>
+      <p class="auth-switch">Don't have an account? <button class="link-btn" id="show-signup">Create one</button></p>
+    </div>
+
+    <!-- SIGNUP PANEL -->
+    <div class="auth-card glass hidden" id="auth-signup-panel">
+      <div class="auth-logo">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" stroke="var(--accent-primary)" stroke-width="2"/>
+          <path d="M12 20 L17 25 L28 14" stroke="var(--accent-secondary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1 class="auth-brand">Join <span>Health</span>Sync</h1>
+      </div>
+      <p class="auth-tagline">Begin your wellness journey today</p>
+
+      <div class="auth-form-group">
+        <label for="signup-username">Choose Username</label>
+        <input type="text" id="signup-username" placeholder="e.g. wellness_hero" autocomplete="username" />
+      </div>
+      <div class="auth-form-group">
+        <label for="signup-age">Age</label>
+        <input type="number" id="signup-age" placeholder="Your age" min="5" max="120" />
+      </div>
+      <div class="auth-form-group">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" placeholder="Create a password" autocomplete="new-password" />
+      </div>
+
+      <p class="auth-error" id="signup-error" role="alert" aria-live="polite"></p>
+
+      <button class="btn-primary full-width" id="btn-signup">Create Account</button>
+      <p class="auth-switch">Already a member? <button class="link-btn" id="show-login">Sign in</button></p>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MAIN APPLICATION SHELL
+  ============================================================ -->
+  <div id="app-shell" class="app-shell hidden">
+
+    <!-- SIDEBAR NAV -->
+    <nav class="sidebar glass" id="sidebar" role="navigation" aria-label="Main Navigation">
+      <div class="sidebar-header">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36" aria-hidden="true">
+          <circle cx="20" cy="20" r="18" stroke="var(--accent-primary)" stroke-width="2"/>
+          <path d="M12 20 L17 25 L28 14" stroke="var(--accent-secondary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="sidebar-brand">HealthSync</span>
+      </div>
+
+      <ul class="nav-list" role="list">
+        <li><button class="nav-item active" data-page="dashboard" aria-current="page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </button></li>
+        <li><button class="nav-item" data-page="log">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2C8 2 5 6 5 11c0 4 2.5 7 7 8.5C17 18 19 15 19 11c0-5-3-9-7-9z"/><path d="M12 7v5l3 3"/></svg>
+          Log Today
+        </button></li>
+        <li><button class="nav-item" data-page="ai-tips">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+          AI Tips
+        </button></li>
+        <li><button class="nav-item" data-page="quiz">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Quiz Arena
+        </button></li>
+        <li><button class="nav-item" data-page="avatar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          My Avatar
+        </button></li>
+        <li><button class="nav-item" data-page="leaderboard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21L12 17.77L5.82 21L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>
+          Leaderboard
+        </button></li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+        <button class="btn-logout" id="btn-logout" aria-label="Sign out">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+          Sign Out
+        </button>
+      </div>
+    </nav>
+
+    <!-- MOBILE TOPBAR -->
+    <header class="topbar" role="banner">
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <span class="topbar-brand">HealthSync AI</span>
+      <div class="topbar-user" id="topbar-user-display"></div>
+    </header>
+
+    <!-- PAGE CONTAINER -->
+    <main class="page-container" id="page-container" role="main">
+
+      <!-- ── PAGE: DASHBOARD ── -->
+      <section class="page active" id="page-dashboard" aria-labelledby="dashboard-title">
+        <div class="page-header">
+          <h2 id="dashboard-title" class="page-title">Welcome back, <span id="dashboard-username">Hero</span> 👋</h2>
+          <p class="page-subtitle">Here's your wellness snapshot for today</p>
+        </div>
+
+        <!-- XP / LEVEL BANNER -->
+        <div class="xp-banner glass">
+          <div class="xp-avatar-mini" id="xp-avatar-mini" aria-hidden="true"></div>
+          <div class="xp-info">
+            <div class="xp-level-label">Level <span id="xp-level-display">1</span> — <span id="xp-rank-display">Wellness Cadet</span></div>
+            <div class="xp-bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="XP Progress">
+              <div class="xp-bar-fill" id="xp-bar-fill"></div>
+            </div>
+            <div class="xp-points-label"><span id="xp-current">0</span> / <span id="xp-next">200</span> XP</div>
+          </div>
+          <div class="xp-badge" id="xp-badge-display">🌱</div>
+        </div>
+
+        <!-- STAT CARDS -->
+        <div class="stat-grid" role="list" aria-label="Today's health stats">
+          <div class="stat-card glass" role="listitem" data-stat="mood">
+            <div class="stat-icon mood-icon" aria-hidden="true">😊</div>
+            <div class="stat-info">
+              <span class="stat-label">Mental Mood</span>
+              <span class="stat-value" id="stat-mood-val">—</span>
+            </div>
+            <div class="stat-ring" aria-hidden="true">
+              <svg viewBox="0 0 60 60"><circle class="ring-bg" cx="30" cy="30" r="24"/><circle class="ring-fill mood-ring" id="ring-mood" cx="30" cy="30" r="24" style="--pct:0"/></svg>
+            </div>
+          </div>
+          <div class="stat-card glass" role="listitem" data-stat="hydration">
+            <div class="stat-icon" aria-hidden="true">💧</div>
+            <div class="stat-info">
+              <span class="stat-label">Hydration</span>
+              <span class="stat-value" id="stat-hydration-val">— glasses</span>
+            </div>
+            <div class="stat-ring" aria-hidden="true">
+              <svg viewBox="0 0 60 60"><circle class="ring-bg" cx="30" cy="30" r="24"/><circle class="ring-fill hydration-ring" id="ring-hydration" cx="30" cy="30" r="24" style="--pct:0"/></svg>
+            </div>
+          </div>
+          <div class="stat-card glass" role="listitem" data-stat="activity">
+            <div class="stat-icon" aria-hidden="true">🏃</div>
+            <div class="stat-info">
+              <span class="stat-label">Activity</span>
+              <span class="stat-value" id="stat-activity-val">— min</span>
+            </div>
+            <div class="stat-ring" aria-hidden="true">
+              <svg viewBox="0 0 60 60"><circle class="ring-bg" cx="30" cy="30" r="24"/><circle class="ring-fill activity-ring" id="ring-activity" cx="30" cy="30" r="24" style="--pct:0"/></svg>
+            </div>
+          </div>
+          <div class="stat-card glass" role="listitem" data-stat="sleep">
+            <div class="stat-icon" aria-hidden="true">🌙</div>
+            <div class="stat-info">
+              <span class="stat-label">Sleep</span>
+              <span class="stat-value" id="stat-sleep-val">— hrs</span>
+            </div>
+            <div class="stat-ring" aria-hidden="true">
+              <svg viewBox="0 0 60 60"><circle class="ring-bg" cx="30" cy="30" r="24"/><circle class="ring-fill sleep-ring" id="ring-sleep" cx="30" cy="30" r="24" style="--pct:0"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- SVG CHARTS ROW -->
+        <div class="charts-row">
+          <div class="chart-card glass" aria-label="7-day wellness trend chart">
+            <h3 class="chart-title">7-Day Wellness Trend</h3>
+            <svg id="trend-chart" class="trend-svg" viewBox="0 0 500 160" preserveAspectRatio="none" role="img" aria-label="Line chart showing 7-day wellness trend">
+              <defs>
+                <linearGradient id="grad-mood" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--accent-primary)" stop-opacity="0.5"/>
+                  <stop offset="100%" stop-color="var(--accent-primary)" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="grad-hydration" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--accent-cyan)" stop-opacity="0.4"/>
+                  <stop offset="100%" stop-color="var(--accent-cyan)" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="grad-activity" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--accent-green)" stop-opacity="0.4"/>
+                  <stop offset="100%" stop-color="var(--accent-green)" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <!-- Grid lines -->
+              <line x1="0" y1="40" x2="500" y2="40" stroke="var(--glass-border)" stroke-dasharray="4 4"/>
+              <line x1="0" y1="80" x2="500" y2="80" stroke="var(--glass-border)" stroke-dasharray="4 4"/>
+              <line x1="0" y1="120" x2="500" y2="120" stroke="var(--glass-border)" stroke-dasharray="4 4"/>
+              <!-- Chart paths injected by JS -->
+              <g id="chart-areas"></g>
+              <g id="chart-lines"></g>
+              <g id="chart-dots"></g>
+              <!-- X-axis labels -->
+              <g id="chart-labels" fill="var(--text-muted)" font-size="11" font-family="DM Sans, sans-serif"></g>
+            </svg>
+            <div class="chart-legend">
+              <span class="legend-item mood-legend">Mood</span>
+              <span class="legend-item hydration-legend">Hydration</span>
+              <span class="legend-item activity-legend">Activity</span>
+            </div>
+          </div>
+
+          <!-- STREAK CARD -->
+          <div class="streak-card glass">
+            <h3 class="chart-title">Streaks & Badges</h3>
+            <div class="streak-display">
+              <div class="streak-flame" aria-label="Streak flame icon" aria-hidden="true">🔥</div>
+              <div class="streak-count" id="streak-count">0</div>
+              <div class="streak-label">Day Streak</div>
+            </div>
+            <div class="badges-grid" id="badges-grid" role="list" aria-label="Earned badges"></div>
+          </div>
+        </div>
+
+        <!-- TODAY'S TIP PREVIEW -->
+        <div class="tip-preview glass" id="tip-preview-card">
+          <div class="tip-preview-header">
+            <span class="tip-icon" aria-hidden="true">💡</span>
+            <h3>Today's AI Health Tip</h3>
+          </div>
+          <p class="tip-preview-text" id="tip-preview-text">Log your daily health stats to receive personalized AI-driven wellness tips!</p>
+          <button class="btn-secondary" data-page="ai-tips">View All Tips →</button>
+        </div>
+      </section>
+
+      <!-- ── PAGE: LOG TODAY ── -->
+      <section class="page hidden" id="page-log" aria-labelledby="log-title">
+        <div class="page-header">
+          <h2 id="log-title" class="page-title">Log Today's Health</h2>
+          <p class="page-subtitle">Track your daily wellness metrics to earn XP</p>
+        </div>
+
+        <div class="log-form-container glass">
+          <form id="health-log-form" novalidate aria-label="Daily health log form">
+            <!-- MOOD -->
+            <div class="form-section">
+              <label class="form-label">😊 Mental Mood <span class="form-hint">(1 = Very Low, 10 = Excellent)</span></label>
+              <div class="slider-container">
+                <input type="range" id="log-mood" min="1" max="10" value="5" class="health-slider mood-slider" aria-label="Mood level" aria-valuemin="1" aria-valuemax="10" aria-valuenow="5" />
+                <span class="slider-value" id="mood-val-display">5</span>
+              </div>
+              <div class="mood-emojis" aria-hidden="true">
+                <span>😔</span><span>😐</span><span>🙂</span><span>😊</span><span>🤩</span>
+              </div>
+            </div>
+
+            <!-- HYDRATION -->
+            <div class="form-section">
+              <label class="form-label">💧 Water Intake <span class="form-hint">(glasses of 250ml)</span></label>
+              <div class="water-counter">
+                <button type="button" class="counter-btn" id="hydration-minus" aria-label="Decrease water intake">−</button>
+                <div class="water-glasses" id="water-glasses-display" role="img" aria-label="Water intake visualization"></div>
+                <button type="button" class="counter-btn" id="hydration-plus" aria-label="Increase water intake">+</button>
+              </div>
+              <input type="hidden" id="log-hydration" value="0" />
+              <p class="water-label">Glasses today: <strong id="hydration-count-label">0</strong> / 8</p>
+            </div>
+
+            <!-- ACTIVITY -->
+            <div class="form-section">
+              <label class="form-label">🏃 Physical Activity <span class="form-hint">(minutes of exercise)</span></label>
+              <div class="slider-container">
+                <input type="range" id="log-activity" min="0" max="120" value="0" step="5" class="health-slider activity-slider" aria-label="Activity minutes" aria-valuemin="0" aria-valuemax="120" aria-valuenow="0" />
+                <span class="slider-value" id="activity-val-display">0 min</span>
+              </div>
+              <div class="activity-labels" aria-hidden="true">
+                <span>Sedentary</span><span>Light</span><span>Moderate</span><span>Active</span>
+              </div>
+            </div>
+
+            <!-- SLEEP -->
+            <div class="form-section">
+              <label class="form-label">🌙 Sleep Duration <span class="form-hint">(hours last night)</span></label>
+              <div class="slider-container">
+                <input type="range" id="log-sleep" min="0" max="12" value="7" step="0.5" class="health-slider sleep-slider" aria-label="Sleep hours" aria-valuemin="0" aria-valuemax="12" aria-valuenow="7" />
+                <span class="slider-value" id="sleep-val-display">7 hrs</span>
+              </div>
+            </div>
+
+            <!-- SYMPTOMS -->
+            <div class="form-section">
+              <label class="form-label">🩺 Any Symptoms Today? <span class="form-hint">(select all that apply)</span></label>
+              <div class="symptom-chips" role="group" aria-label="Symptom selection">
+                <label class="chip"><input type="checkbox" name="symptoms" value="headache" /><span>Headache</span></label>
+                <label class="chip"><input type="checkbox" name="symptoms" value="fatigue" /><span>Fatigue</span></label>
+                <label class="chip"><input type="checkbox" name="symptoms" value="stress" /><span>Stress</span></label>
+                <label class="chip"><input type="checkbox" name="symptoms" value="anxiety" /><span>Anxiety</span></label>
+                <label class="chip"><input type="checkbox" name="symptoms" value="sore-muscles" /><span>Sore Muscles</span></label>
+                <label class="chip"><input type="checkbox" name="symptoms" value="low-energy" /><span>Low Energy</span></label>
+                <label class="chip"><input type="checkbox" name="symptoms" value="none" /><span>None 🎉</span></label>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-primary" id="btn-log-submit">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg>
+                Save & Earn XP
+              </button>
+              <p class="form-xp-hint">+50 XP for logging today!</p>
+            </div>
+          </form>
+
+          <div class="log-success hidden" id="log-success-msg" role="alert" aria-live="assertive">
+            <div class="success-icon" aria-hidden="true">✅</div>
+            <h3>Logged Successfully!</h3>
+            <p id="log-success-detail">You earned XP for logging your health today.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── PAGE: AI TIPS ── -->
+      <section class="page hidden" id="page-ai-tips" aria-labelledby="tips-title">
+        <div class="page-header">
+          <h2 id="tips-title" class="page-title">AI Wellness Engine</h2>
+          <p class="page-subtitle">Personalized health recommendations powered by your data</p>
+        </div>
+
+        <div class="tips-engine-wrapper">
+          <!-- ENGINE CARD -->
+          <div class="engine-card glass">
+            <div class="engine-header">
+              <div class="engine-pulse" aria-hidden="true"></div>
+              <h3>Analysis Engine</h3>
+              <span class="engine-status" id="engine-status-label">Awaiting data…</span>
+            </div>
+            <div class="engine-metrics" id="engine-metrics-display" aria-live="polite">
+              <div class="metric-pill" id="metric-wellness-score">
+                <span class="pill-label">Wellness Score</span>
+                <span class="pill-value" id="wellness-score-val">—</span>
+              </div>
+              <div class="metric-pill" id="metric-risk-level">
+                <span class="pill-label">Risk Level</span>
+                <span class="pill-value" id="risk-level-val">—</span>
+              </div>
+              <div class="metric-pill" id="metric-focus-area">
+                <span class="pill-label">Focus Area</span>
+                <span class="pill-value" id="focus-area-val">—</span>
+              </div>
+            </div>
+            <button class="btn-primary" id="btn-generate-tips">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3"/></svg>
+              Generate My Tips
+            </button>
+          </div>
+
+          <!-- TIPS DISPLAY -->
+          <div class="tips-display" id="tips-display" aria-live="polite" aria-label="Generated health tips">
+            <div class="tips-placeholder">
+              <div class="placeholder-icon" aria-hidden="true">🤖</div>
+              <p>Log your health data and click <strong>Generate My Tips</strong> to get personalized advice.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- HEALTH FACTS CAROUSEL -->
+        <div class="facts-section">
+          <h3 class="section-title">📚 Daily Health Facts</h3>
+          <div class="facts-carousel" id="facts-carousel" aria-label="Health facts carousel" aria-live="polite">
+            <div class="fact-card glass" id="fact-display">
+              <span class="fact-number" id="fact-number">#1</span>
+              <p class="fact-text" id="fact-text">Loading health fact…</p>
+            </div>
+          </div>
+          <div class="carousel-controls">
+            <button class="carousel-btn" id="fact-prev" aria-label="Previous health fact">←</button>
+            <span class="carousel-counter" id="fact-counter">1 / 10</span>
+            <button class="carousel-btn" id="fact-next" aria-label="Next health fact">→</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── PAGE: QUIZ ARENA ── -->
+      <section class="page hidden" id="page-quiz" aria-labelledby="quiz-title">
+        <div class="page-header">
+          <h2 id="quiz-title" class="page-title">Quiz Arena</h2>
+          <p class="page-subtitle">Test your knowledge on first aid & mental health</p>
+        </div>
+
+        <!-- QUIZ LOBBY -->
+        <div id="quiz-lobby" class="quiz-lobby">
+          <div class="quiz-tracks" role="list" aria-label="Quiz tracks">
+            <div class="quiz-track-card glass" role="listitem" data-track="firstaid">
+              <div class="track-icon" aria-hidden="true">🩹</div>
+              <h3>First Aid Essentials</h3>
+              <p>Learn critical emergency response skills</p>
+              <div class="track-meta">
+                <span class="track-difficulty beginner">Beginner</span>
+                <span class="track-questions">10 Questions</span>
+              </div>
+              <button class="btn-primary start-quiz-btn" data-track="firstaid">Start Track</button>
+            </div>
+            <div class="quiz-track-card glass" role="listitem" data-track="mental">
+              <div class="track-icon" aria-hidden="true">🧠</div>
+              <h3>Mental Health Mastery</h3>
+              <p>Understand mental wellness concepts</p>
+              <div class="track-meta">
+                <span class="track-difficulty intermediate">Intermediate</span>
+                <span class="track-questions">10 Questions</span>
+              </div>
+              <button class="btn-primary start-quiz-btn" data-track="mental">Start Track</button>
+            </div>
+            <div class="quiz-track-card glass" role="listitem" data-track="nutrition">
+              <div class="track-icon" aria-hidden="true">🥗</div>
+              <h3>Nutrition & Lifestyle</h3>
+              <p>Master the art of healthy living</p>
+              <div class="track-meta">
+                <span class="track-difficulty advanced">Advanced</span>
+                <span class="track-questions">10 Questions</span>
+              </div>
+              <button class="btn-primary start-quiz-btn" data-track="nutrition">Start Track</button>
+            </div>
+          </div>
+          <!-- BEST SCORES -->
+          <div class="best-scores glass" id="best-scores-panel">
+            <h3>🏆 Your Best Scores</h3>
+            <div id="best-scores-list"></div>
+          </div>
+        </div>
+
+        <!-- QUIZ ACTIVE -->
+        <div id="quiz-active" class="quiz-active hidden" role="main" aria-label="Active quiz">
+          <div class="quiz-header-bar glass">
+            <div class="quiz-track-label" id="quiz-track-name">First Aid</div>
+            <div class="quiz-progress-wrap" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10" aria-label="Quiz progress" id="quiz-progress-bar-wrap">
+              <div class="quiz-progress-bar" id="quiz-progress-bar"></div>
+            </div>
+            <div class="quiz-counters">
+              <span class="quiz-score-display">Score: <strong id="quiz-score-display">0</strong></span>
+              <span class="quiz-q-display">Q <span id="quiz-q-num">1</span>/10</span>
+            </div>
+          </div>
+
+          <div class="question-card glass" id="question-card">
+            <p class="question-text" id="question-text" aria-live="polite"></p>
+            <div class="options-grid" id="options-grid" role="group" aria-label="Answer options"></div>
+            <div class="quiz-feedback hidden" id="quiz-feedback" role="alert" aria-live="assertive"></div>
+            <button class="btn-primary hidden" id="btn-next-question">Next Question →</button>
+          </div>
+        </div>
+
+        <!-- QUIZ RESULTS -->
+        <div id="quiz-results" class="quiz-results hidden" role="main" aria-label="Quiz results">
+          <div class="results-card glass">
+            <div class="result-trophy" aria-hidden="true" id="result-trophy">🏆</div>
+            <h3 class="result-title" id="result-title">Quiz Complete!</h3>
+            <div class="result-score-big" id="result-score-big">0/10</div>
+            <p class="result-message" id="result-message"></p>
+            <div class="result-xp" id="result-xp-earned">+0 XP</div>
+            <div class="result-actions">
+              <button class="btn-primary" id="btn-retry-quiz">Retry</button>
+              <button class="btn-secondary" id="btn-back-lobby">All Tracks</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── PAGE: MY AVATAR ── -->
+      <section class="page hidden" id="page-avatar" aria-labelledby="avatar-title">
+        <div class="page-header">
+          <h2 id="avatar-title" class="page-title">My Wellness Avatar</h2>
+          <p class="page-subtitle">Your digital wellness companion evolves with you</p>
+        </div>
+
+        <div class="avatar-workspace">
+          <!-- AVATAR STAGE -->
+          <div class="avatar-stage glass">
+            <div class="avatar-aura" aria-hidden="true"></div>
+            <div class="avatar-figure" id="avatar-figure" aria-label="Your wellness avatar">
+              <!-- SVG Avatar rendered by JS -->
+            </div>
+            <div class="avatar-name-plate">
+              <span id="avatar-name-display">Hero</span>
+              <span class="avatar-level-badge" id="avatar-level-badge">Lvl 1</span>
+            </div>
+            <div class="avatar-mood-speech" id="avatar-speech-bubble" aria-live="polite" role="status"></div>
+          </div>
+
+          <!-- CUSTOMIZATION PANEL -->
+          <div class="avatar-customizer glass">
+            <h3 class="customizer-title">Customize Avatar</h3>
+
+            <div class="customizer-section">
+              <label class="form-label">Avatar Color</label>
+              <div class="color-swatches" id="color-swatches" role="group" aria-label="Avatar color selection">
+                <button class="swatch active" data-color="#6C63FF" style="background:#6C63FF" aria-label="Purple"></button>
+                <button class="swatch" data-color="#00D4AA" style="background:#00D4AA" aria-label="Teal"></button>
+                <button class="swatch" data-color="#FF6B6B" style="background:#FF6B6B" aria-label="Coral"></button>
+                <button class="swatch" data-color="#FFD700" style="background:#FFD700" aria-label="Gold"></button>
+                <button class="swatch" data-color="#FF61D8" style="background:#FF61D8" aria-label="Pink"></button>
+                <button class="swatch" data-color="#4FC3F7" style="background:#4FC3F7" aria-label="Sky Blue"></button>
+              </div>
+            </div>
+
+            <div class="customizer-section">
+              <label class="form-label">Avatar Expression</label>
+              <div class="expression-btns" role="group" aria-label="Avatar expression selection">
+                <button class="expr-btn active" data-expr="happy" aria-pressed="true">😄 Happy</button>
+                <button class="expr-btn" data-expr="focused" aria-pressed="false">🎯 Focused</button>
+                <button class="expr-btn" data-expr="cool" aria-pressed="false">😎 Cool</button>
+                <button class="expr-btn" data-expr="determined" aria-pressed="false">💪 Determined</button>
+              </div>
+            </div>
+
+            <div class="customizer-section">
+              <label class="form-label">Accessory</label>
+              <div class="accessory-btns" role="group" aria-label="Avatar accessory selection">
+                <button class="acc-btn active" data-acc="none" aria-pressed="true">None</button>
+                <button class="acc-btn" data-acc="crown" aria-pressed="false">👑 Crown</button>
+                <button class="acc-btn" data-acc="glasses" aria-pressed="false">🕶 Glasses</button>
+                <button class="acc-btn" data-acc="headphones" aria-pressed="false">🎧 Headphones</button>
+              </div>
+            </div>
+
+            <div class="avatar-stats-mini">
+              <h4>Avatar Stats</h4>
+              <div class="mini-stat"><span>Total Logs</span><strong id="avatar-stat-logs">0</strong></div>
+              <div class="mini-stat"><span>Quizzes Taken</span><strong id="avatar-stat-quizzes">0</strong></div>
+              <div class="mini-stat"><span>Total XP</span><strong id="avatar-stat-xp">0</strong></div>
+              <div class="mini-stat"><span>Badges Earned</span><strong id="avatar-stat-badges">0</strong></div>
+            </div>
+
+            <button class="btn-primary" id="btn-save-avatar">Save Avatar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── PAGE: LEADERBOARD ── -->
+      <section class="page hidden" id="page-leaderboard" aria-labelledby="leaderboard-title">
+        <div class="page-header">
+          <h2 id="leaderboard-title" class="page-title">Global Leaderboard</h2>
+          <p class="page-subtitle">Top wellness warriors in the academy</p>
+        </div>
+
+        <div class="leaderboard-container">
+          <div class="podium-row" aria-label="Top 3 wellness warriors">
+            <div class="podium-slot silver" id="podium-2" aria-label="2nd place"></div>
+            <div class="podium-slot gold" id="podium-1" aria-label="1st place"></div>
+            <div class="podium-slot bronze" id="podium-3" aria-label="3rd place"></div>
+          </div>
+
+          <div class="leaderboard-table glass">
+            <div class="lb-header">
+              <span>Rank</span><span>Player</span><span>Level</span><span>XP</span><span>Streak</span>
+            </div>
+            <div class="lb-list" id="lb-list" role="list" aria-label="Leaderboard rankings"></div>
+          </div>
+        </div>
+      </section>
+
+    </main><!-- /page-container -->
+  </div><!-- /app-shell -->
+
+  <!-- TOAST NOTIFICATIONS -->
+  <div class="toast-container" id="toast-container" role="log" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- MOBILE OVERLAY -->
+  <div class="sidebar-overlay hidden" id="sidebar-overlay" aria-hidden="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
