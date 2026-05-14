@@ -23,7 +23,7 @@
         </tr>
         <tr style="background-color: #f9f9f9;">
             <td style="padding: 10px;">🔢 Age</td>
-            <td>13 years old</td>
+            <td>14 years old</td>
         </tr>
         <tr>
             <td style="padding: 10px;">🎓 Background</td>
