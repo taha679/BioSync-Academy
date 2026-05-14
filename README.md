@@ -63,4 +63,8 @@ The **e-ICON World Contest** is a global competition where students develop web 
 
 <footer>
     <p align="center">© 2026 e-ICON Morocco Team — BioSync-Academy</p>
+<<<<<<< HEAD
 </footer>
+=======
+</footer>
+>>>>>>> 40ac4f9 (Update README and index.html)
