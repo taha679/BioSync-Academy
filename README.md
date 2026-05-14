@@ -15,9 +15,9 @@
     </thead>
     <tbody>
         <tr>
-            <td style="padding: 10px; font-weight: bold;">🖼️ Profile</td>
+            <td style="padding: 10px; font-weight: bold;">🖼️ Profile Photo</td>
             <td>
-                <img src="https://avatars.githubusercontent.com/u/146687479?v=4" alt="Med Taha Hayati" width="140" style="border-radius: 50%; border: 3px solid #6C63FF;">
+                <img src="https://avatars.githubusercontent.com/u/146687479?v=4" alt="Med Taha Hayati" width="140" style="border-radius: 12px; border: 3px solid #6C63FF; box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);">
                 <br><a href="https://github.com/taha679">@taha679</a>
             </td>
         </tr>
@@ -27,17 +27,17 @@
         </tr>
         <tr>
             <td style="padding: 10px;">🎓 Background</td>
-            <td>Full-Stack Developer | Robotics Enthusiast (WRO)</td>
+            <td>Full-Stack Developer | Robotics Specialist (WRO)</td>
         </tr>
         <tr>
-            <td style="padding: 10px;">🌐 Tech Stack</td>
+            <td style="padding: 10px;">🌐 Tech Stack & Expertise</td>
             <td style="text-align: center;">
-                <img src="https://skillicons.dev/icons?i=html,css,js,github,vscode" alt="Skills">
+                <img src="https://skillicons.dev/icons?i=html,css,js,py,arduino,github,vscode" alt="My Skills">
             </td>
         </tr>
         <tr>
             <td style="padding: 10px;">🏆 Mission</td>
-            <td>Developing innovative digital solutions for global health challenges.</td>
+            <td>Integrating Hardware Intelligence with Web Solutions to promote Global Health.</td>
         </tr>
     </tbody>
 </table>
@@ -47,19 +47,19 @@
 ## 🌍 e-ICON World Contest 2026
 
 ### 🔎 Overview
-The **e-ICON World Contest** is a global competition where students develop web/mobile applications that serve the **United Nations Sustainable Development Goals (SDGs)**.
+The **e-ICON World Contest** is a global competition where students develop web applications that serve the **United Nations Sustainable Development Goals (SDGs)**.
 
 **Our Focus:** **Goal 3 — Good Health and Well-being.**
 - **Project:** BioSync-Academy
-- **Category:** Web Application Development
+- **Category:** Web Application Development (High-Level JS Architecture)
 - **Tech Philosophy:** Offline-First, Privacy-Focused, and Gamified Learning.
 
 ---
 
 ## 🛠️ Project Core Features
-- **[Procedural Avatar]** Custom SVG-based characters that evolve with user progress.
-- **[Health Logic Engine]** Sophisticated JS classes managing XP, levels, and diagnostics.
-- **[Interactive UI]** Futuristic Glassmorphism design system built from scratch.
+- **[Procedural Avatar]** Custom SVG-based characters that evolve with user progress (No external assets).
+- **[Health Logic Engine]** Sophisticated JavaScript classes managing XP, levels, and diagnostics.
+- **[Robotics-Inspired Design]** Logic architecture influenced by autonomous robot decision-making.
 
 <footer>
     <p align="center">© 2026 e-ICON Morocco Team — BioSync-Academy</p>
