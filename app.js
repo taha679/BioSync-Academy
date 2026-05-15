@@ -1741,4 +1741,4 @@ document.addEventListener('DOMContentLoaded', () => {
  *    RecommendationEngine, UIController, App. 700+ lines of
  *    heavily commented, enterprise-grade JavaScript.
  * ================================================================
- */
+ 
