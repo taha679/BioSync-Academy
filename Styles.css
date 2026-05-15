@@ -1454,7 +1454,7 @@ p  { color: var(--text-secondary); }
   .log-form-container { padding: 22px 18px; }
 }
 
-/* ── 20. LOADING SPINNER ─────────────────────────────────────────── */
+/* ── 20. LOADING SPINNER ────────────────────────────────────────── */
 .spinner {
   width: 32px;
   height: 32px;
